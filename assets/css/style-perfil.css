@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.5s;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.copyright-text {
+    text-transform: uppercase;
+}
+
+.main-button a {
+    background-color: #3a8bcd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    display: inline-block;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    transition: all 0.5s;
+}
+
+.main-button a:hover {
+    opacity: 0.7;
+}
+
+.logo {
+    margin-top: -20px;
+}
+
+.home {
+    display: grid;
+    position: relative;
+    min-height: calc(100vh - 80px);
+    overflow: hidden;
+    background: #9fb5ff;
+}
+
+.painel {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.perfil {
+    display: grid;
+    background: #383838a7;
+    width: 30%;
+    color: #fff;
+    justify-content: center;
+    align-self: center;
+}
+
+.info, p {
+    color:#fff;
+}
+
+
+/*aqui em*/
+
+
+.home {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+.home .painel .perfil {
+    display: grid;
+    position: absolute;
+    border: solid black 2px;
+    border-radius: 10px;
+    z-index: 1;
+    width: 50pc;
+    background-color: rgba(0, 0, 0, 0.634);
+    min-height: calc(95vh - 80px);
+    padding-bottom: 10px;
+    height:auto;
+    color:#fff;
+    font-family: 'Codygoon';
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home .painel .perfil .info {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+
+.home .painel .perfil .info .bem-vindo {
+    margin: 5px;
+    font-size: 3pc;
+}
+
+.home .painel .perfil .info .nome {
+    font-size: 2pc;
+    font-family: monospace;
+    color: #fff;
+}
+
+.home .painel .perfil .btn-outline-light:hover{
+    color: black !important;
+    
+}
