@@ -3,23 +3,17 @@
     include_once('config.php');
     if(isset($_POST['update']))
     {
-        $id = $_POST['id'];
-        $nome = $_POST['nome'];
+        $user_id = $_POST['user_id'];
+        $user_nome = $_POST['user_nome'];
         $email = $_POST['email'];
         $senha = $_POST['senha'];
-        $telefone = $_POST['telefone'];
-        $sexo = $_POST['genero'];
-        $data_nasc = $_POST['data_nascimento'];
-        $cidade = $_POST['cidade'];
-        $estado = $_POST['estado'];
-        $endereco = $_POST['endereco'];
         
-        $sqlInsert = "UPDATE usuarios 
-        SET nome='$nome',senha='$senha',email='$email',telefone='$telefone',sexo='$sexo',data_nasc='$data_nasc',cidade='$cidade',estado='$estado',endereco='$endereco'
-        WHERE id=$id";
+        $sqlInsert = "UPDATE user 
+        SET user_nome='$user_nome',senha='$senha',email='$email'
+        WHERE user_id = $user_id";
         $result = $conexao->query($sqlInsert);
         print_r($result);
     }
-    header('Location: sistema.php');
+    header('Location: login.html');
 
 ?>

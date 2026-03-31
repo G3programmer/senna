@@ -1,5 +1,27 @@
+<?php
+// Inclua o arquivo de conexão
+include('config.php');
+
+ 
+
+
+
+$select_products = mysqli_query($conexao, "
+    SELECT p.*, 
+           i.caminho_imagem, 
+           GROUP_CONCAT(DISTINCT t.tamanho SEPARATOR ', ') AS tamanhos
+    FROM produtos p
+    LEFT JOIN imagem_produtos i ON p.produto_id = i.produto_id
+    LEFT JOIN tamanho_produto tp ON p.produto_id = tp.produto_id
+    LEFT JOIN tamanhos t ON tp.tamanho_id = t.tamanho_id
+    GROUP BY p.produto_id
+");
+
+?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -56,7 +78,7 @@ começou a brincadeira
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Produtos</a>
+            <a class="nav-link" href="productsShow.php">Produtos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="login.html">Sobre nós</a>
@@ -105,80 +127,30 @@ começou a brincadeira
       <div class="row">
         <div class="col-md-12">
           <div class="section-heading">
-            <div class="line-dec"></div>
-            <h1>Produtos</h1>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="owl-carousel owl-theme">
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-01.jpg" alt="Item 1">
-                <h4>Calça estilosa</h4>
-                <h6>$1588.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-02.jpg" alt="Item 2">
-                <h4>camisa</h4>
-                <h6>$250.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-03.jpg" alt="Item 3">
-                <h4>CALÇA MUITO BONITA</h4>
-                <h6>$350.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-04.jpg" alt="Item 4">
-                <h4>calça</h4>
-                <h6>$450.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-05.jpg" alt="Item 5">
-                <h4>jaqueta</h4>
-                <h6>$55.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-06.jpg" alt="Item 6">
-                <h4>singaaaa</h4>
-                <h6>$65.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-04.jpg" alt="Item 7">
-                <h4>camisa </h4>
-                <h6>$75.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-05.jpg" alt="Item 8">
-                <h4>roupa2</h4>
-                <h6>$850.00</h6>
-              </div>
-            </a>
-            <a href="single-product.html">
-              <div class="featured-item">
-                <img src="assets/images/produtos/item-06.jpg" alt="Item 9">
-                <h4>roupa</h4>
-                <h6>$95.00</h6>
-              </div>
-            </a>
-          </div>
-        </div>
+          <h1>Produtos</h1>
+      </div>
+      <div class="owl-carousel owl-theme">
+        <?php
+        while ($row = mysqli_fetch_assoc($select_products)) {
+            $imagem = $row['caminho_imagem'] ?? 'assets/images/default.png'; // Imagem padrão
+            echo "<div class='featured-item'>";
+            echo "<img src='" . htmlspecialchars($imagem, ENT_QUOTES) . "' style='width:200px;' alt='Produto'>";
+            echo "<h4>" . htmlspecialchars($row['produto_nome'], ENT_QUOTES) . "</h4>";
+            echo "<h6>R$" . number_format($row['preco'], 2, ',', '.') . "</h6>";
+            echo "<p> Tamanho:";
+            echo "<p>" . htmlspecialchars($row['tamanhos'] ?: 'N/A', ENT_QUOTES) . "</p>";
+            echo "<p>" . htmlspecialchars($row['descricao'], ENT_QUOTES) . "</p>";
+            echo "<p>Modelo: " . htmlspecialchars($row['modelo'], ENT_QUOTES) . "</p>";
+            echo "<a href='login.html' class='option-btn'>Logar para visualizar mais</a>";
+            echo "</div>";
+        }
+        ?>
       </div>
     </div>
   </div>
+    </div>
+  </div>
+
   <!-- Featred Ends Here -->
 
 
@@ -201,17 +173,7 @@ começou a brincadeira
               <form id="subscribe" action="" method="get">
                 <div class="row">
                   <div class="col-md-7">
-                    <fieldset>
-                      <input name="email" type="text" class="form-control" id="email"
-                        onfocus="if(this.value == 'Your Email...') { this.value = ''; }"
-                        onBlur="if(this.value == '') { this.value = 'Your Email...';}" value="Your Email..."
-                        required="">
-                    </fieldset>
                   </div>
-                  <div class="col-md-5">
-                    <fieldset>
-                      <button type="submit" id="form-submit" class="button">compre agora</button>
-                    </fieldset>
                   </div>
                 </div>
               </form>
@@ -240,8 +202,6 @@ começou a brincadeira
               <li><a href="#">Home</a></li>
               <li><a href="#">Suporte</a></li>
               <li><a href="#">Politica Prividade</a></li>
-              <li><a href="#">Nosso Trabalho</a></li>
-              <li><a href="#">Contato</a></li>
             </ul>
           </div>
         </div>
